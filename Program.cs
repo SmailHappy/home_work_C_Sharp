@@ -3,12 +3,12 @@
 void Run() // Выбор задачи
 {
     Console.Clear();
-    Console.WriteLine("Д/з - 1. Задача 2 - 2. Задача 4 - 4. Задча 6 - 6. Задача 8 - 8.");
-    Console.WriteLine("Д/з - 2. Задача 10 - 10. Задача 13 - 13. Задча 15 - 15.");
-    Console.WriteLine("Д/з - 3. Задача 19 - 19. Задача 21 - 21. Задча 23 - 23. Задача * - 01. Задача ** - 02.");
-    Console.WriteLine("Д/з - 4. Задача 25 - 25. Задача 27 - 27. Задча 29 - 29. Задача * - 03. Задача ** - 04.");
-    Console.WriteLine("Д/з - 5. Задача 34 - 34. Задача 36 - 36. Задча 38 - 38. Задача * - 05. Задача ** - 06.");
-    Console.WriteLine("\nДля выхода из программы - 0\n");
+    Console.WriteLine("Д/з - 1. Задача 2 - 2. Задача 4 - 4. Задча 6 - 6. Задача 8 - 8."
+                    + "Д/з - 2. Задача 10 - 10. Задача 13 - 13. Задча 15 - 15."
+                    + "Д/з - 3. Задача 19 - 19. Задача 21 - 21. Задча 23 - 23. Задача * - 01. Задача ** - 02."
+                    + "Д/з - 4. Задача 25 - 25. Задача 27 - 27. Задча 29 - 29. Задача * - 03. Задача ** - 04."
+                    + "Д/з - 5. Задача 34 - 34. Задача 36 - 36. Задча 38 - 38. Задача * - 05. Задача ** - 06."
+                    + "Д/з - 6. Задача 41 - 41. Задача 43 - 43. Задача * - 07. Задача ** - 08.\n");
     Console.Write("Введите код задачи: ");
     int exempl = int.Parse(Console.ReadLine());
 
@@ -34,12 +34,14 @@ void Run() // Выбор задачи
     else if (exempl == 38) Exemple38();
     else if (exempl == 05) Exemple_5();
     else if (exempl == 06) Exemple_6();
-    else if (exempl == 0)
-    {
-        Console.WriteLine("\nДля завершения программы нажмите Enter");
-        Console.ReadLine();
+    else if (exempl == 41) Exemple41();
+    else if (exempl == 43) Exemple43();
+    else if (exempl == 07) Exemple_7();
+    else if (exempl == 08) Exemple_8();
+    else {
+        Console.WriteLine("\nТакой задачи здесь нету");
+        Break();
     }
-    else Console.WriteLine("Такой задачи здесь нету");
 }
 
 void Exemple2() // Задача 2: Напишите программу, которая на вход принимает два числа и выдаёт, какое число большее, а какое меньшее.
@@ -477,10 +479,9 @@ void Exemple29() // Задача 29: Напишите программу, кот
     Console.Clear();
     Console.WriteLine("Задача 29. Выводит на экран массив из N элементов.\n");
     Console.Write("Введите число N: ");
-    int number = int.Parse(Console.ReadLine());
+    int N = int.Parse(Console.ReadLine());
 
-    int[] array = new int[number];
-    array = array_random(array);
+    int[] array = fill_array_ONE_dimensional(N);
 
     Console.Write($"\n[{String.Join(",",array)}]\n");
     Break();
@@ -492,14 +493,14 @@ void Exemple_3() // Дополнительная задача (задача со
 // [-5, 1, -9, 6, -7, -2, -3, -4, -6 ,1] -> 6
 // [-7, 2, 4, 6, -7, 7, -3, -4, -2 ,1] -> 7 
 { 
-    int max_in_array(int[] array) // Нахождение максимума в массиве
+    int max_in_array(int[] input_array) // Нахождение максимума в массиве
     {
-        int max_in_array = array[0];
-        for (int i = 0; i < array.Length; i ++)
+        int max_in_array = input_array[0];
+        for (int i = 0; i < input_array.Length; i ++)
         {
-            if (max_in_array < array[i])
+            if (max_in_array < input_array[i])
             {
-                max_in_array = array[i];
+                max_in_array = input_array[i];
             }
         }
         return max_in_array;
@@ -508,8 +509,7 @@ void Exemple_3() // Дополнительная задача (задача со
     Console.Clear();
     Console.WriteLine("Задача *. Заполняет массив из 10 элементов в диапазоне (-10 : 10) и выводит максимальное число из массива.\n");
 
-    int[] array = new int[10];
-    array = array_random(array, -10, 10);
+    int[] array = fill_array_ONE_dimensional(10, -10, 10);
 
     Console.WriteLine($"Массив - [{String.Join(", ",array)}]");
     Console.WriteLine($"Максимальное число в массиве - {max_in_array(array)}\n");
@@ -522,60 +522,43 @@ void Exemple_4() // Дополнительная задача 2 (задача с
 // [1,2,3,4] [3,6,4] -> округлённая до целого числа разница между средними арифметическими массивов = 2. 2 в двоичной системе счисления = 10
 // [4,7,9] [3,3,1,2,2] -> округлённая до целого числа разница между средними арифметическими массивов = 4. 4 в двоичной системе счисления = 100
 {
-    double average_array(int[] array) // Ср.Ариф. массива
+    double average_array(int[] input_array) // Ср.Ариф. массива
     {
         int sum = 0;
-        for (int i = 0; i < array.Length; i++)
+        for (int i = 0; i < input_array.Length; i++)
         {
-            sum = sum + array[i];
+            sum = sum + input_array[i];
         }
-        return sum / array.Length;
+        return sum / input_array.Length;
     }
 
     string from10_in2(int number)// Перевод из 10ой в 2ую систему исчисления
     {
         string result = "";
-        if (number == 1)
-        {
-            return "01";
-        }
-        else if (number == 0)
-        {
-            return "00";
-        }
-        while (number != 1)
-        {
-            if (number % 2 == 1)
-            {
+        if (number == 1) return "01";
+        else if (number == 0) return "00";
+        while (number != 1) {
+            if (number % 2 == 1) {
                 result = "1" + result;
                 number = (number - 1) / 2;
             }
-            else if (number % 2 == 0)
-            {
+            else if (number % 2 == 0) {
                 result = "0" + result;
                 number = number / 2;
             }
         }
-        if (number == 0)
-        {
-            result = "0" + result;
-        }
-        else if (number == 1)
-        {
-            result = "1" + result;
-        }
+        if (number == 0) result = "0" + result;
+        else if (number == 1) result = "1" + result;
         return result;
     }
 
     Console.Clear();
     Console.WriteLine("Задача **. Заполняет 2 одномернных массива из N элементов в диапазоне (1 : 10), находит разницу между средними арифметическими (округленную до целого) и выводит результат в 2ой системе.\n");
     Console.Write("Введите число N: ");
-    int number = int.Parse(Console.ReadLine());
+    int N = int.Parse(Console.ReadLine());
 
-    int[] array_one = new int[number];
-    array_one = array_random(array_one, 1, 10);
-    int[] array_two = new int[number];
-    array_two = array_random(array_two, 1, 2);
+    int[] array_one = fill_array_ONE_dimensional(N, 1, 10);
+    int[] array_two = fill_array_ONE_dimensional(N, 1, 2);
 
     Console.WriteLine($"Массив 1 - [{String.Join(", ",array_one)}]");
     Console.WriteLine($"Массив 2 - [{String.Join(", ",array_two)}]\n");
@@ -584,17 +567,8 @@ void Exemple_4() // Дополнительная задача 2 (задача с
     double average_two = average_array(array_two);
     int average = 0;
 
-    // Console.Write(average_array(array_one));
-    // Console.WriteLine($"\t{average_array(array_two)}\n");
-
-    if (average_one > average_two)
-    {
-        average = Convert.ToInt32(Math.Round(average_one - average_two));
-    }
-    else
-    {
-        average = Convert.ToInt32(Math.Round(average_two - average_one));
-    }
+    if (average_one > average_two) average = Convert.ToInt32(Math.Round(average_one - average_two));
+    else average = Convert.ToInt32(Math.Round(average_two - average_one));
 
     Console.WriteLine($"Разница между ср.ар. массивов = {average}\nВ 2ой системе исчисления - {from10_in2(average)}\n");
     Break();   
@@ -604,16 +578,11 @@ void Exemple34() // Задача 34: Задайте массив заполне�
 // Напишите программу, которая покажет количество чётных чисел в массиве.
 // [345, 897, 568, 234] -> 2
 {
-    int search_positive_number(int[] array)
-    {
+    int search_positive_number(int[] input_array) {
         int count = 0;
 
-        for (int i = 0; i < array.Length; i ++)
-        {
-            if (array[i] % 2 == 0)
-            {
-                count += 1;
-            }
+        for (int i = 0; i < input_array.Length; i ++) {
+            if (input_array[i] % 2 == 0) count += 1;
         }
         return count;
     }
@@ -621,8 +590,7 @@ void Exemple34() // Задача 34: Задайте массив заполне�
     Console.Clear();
     Console.WriteLine("Задача 34. Показывает колличество четных 3 значных чисел в случайно заполненном массиве.\n");
 
-    int[] array = new int[5];
-    array = array_random(array, 100, 1000);
+    int[] array = fill_array_ONE_dimensional(5, 100, 1000);
 
     Console.WriteLine($"Массив - [{String.Join(", ",array)}]");
     Console.WriteLine($"Колличество четных чисел в массиве - {search_positive_number(array)}\n");
@@ -635,12 +603,10 @@ void Exemple36() // Задача 36: Задайте одномерный мас�
 // [3, 7, 23, 12] -> 19
 // [-4, -6, 89, 6] -> 0
 {
-    int sum_in_array(int[] array) 
-    {
+    int sum_in_array(int[] input_array) {
         int sum = 0;
 
-        for (int i = 1; i < array.Length; i += 2)
-        {
+        for (int i = 1; i < array.Length; i += 2) {
             sum = sum + array[i];
         }
         return sum;
@@ -649,8 +615,7 @@ void Exemple36() // Задача 36: Задайте одномерный мас�
     Console.Clear();
     Console.WriteLine("Задача 36. Показывает сумму элементов, находящихся на нечётных позициях.\n");
 
-    int[] array = new int[5];
-    array = array_random(array, -10, 10);
+    int[] array = fill_array_ONE_dimensional(5, -10, 10);
 
     Console.WriteLine($"Массив - [{String.Join(", ",array)}]");
     Console.WriteLine($"\nСумма цифр нечётных позиций = {sum_in_array(array)}\n");
@@ -662,29 +627,20 @@ void Exemple38() // Задача 38: Задайте массив веществ�
 // Найдите разницу между максимальным и минимальным элементов массива.
 // [3 7 22 2 78] -> 76
 {
-    int max_in_array(int[] array)
-    {
-        int max_in_array = array[0];
+    int max_in_array(int[] input_array) {
+        int max_in_array = input_array[0];
 
-        for (int i = 0; i < array.Length; i ++)
-        {
-            if (max_in_array < array[i])
-            {
-                max_in_array = array[i];
-            }
+        for (int i = 0; i < input_array.Length; i ++) {
+            if (max_in_array < input_array[i]) max_in_array = input_array[i];
         }
         return max_in_array;
     }
 
-    int min_in_array(int[] array)
-    {
-        int min_in_array = array[0];
-        for (int i = 0; i < array.Length; i ++)
-        {
-            if (min_in_array > array[i])
-            {
-                min_in_array = array[i];
-            }
+    int min_in_array(int[] input_array) {
+        int min_in_array = input_array[0];
+
+        for (int i = 0; i < input_array.Length; i ++) {
+            if (min_in_array > input_array[i]) min_in_array = input_array[i];
         }
         return min_in_array;
     }
@@ -692,8 +648,7 @@ void Exemple38() // Задача 38: Задайте массив веществ�
     Console.Clear();
     Console.WriteLine("Задача 38. Находит разницу между максимальным и минимальным элементом массива.\n");
 
-    int[] array = new int[8];
-    array = array_random(array);
+    int[] array = fill_array_ONE_dimensional(8);
     int diff = max_in_array(array) - min_in_array(array);
 
     Console.Write($"\n[{String.Join(",",array)}]\n");
@@ -709,76 +664,61 @@ void Exemple_5() // Дополнительная задача (задача со
 // [2,3,5,7] -> ср. арифм. массива знач эл с нечётными числами > ср. арифм. знач эл с чётными числами
 // [1,2,5,4] -> ср. арифм. знач эл массива с нечётными числами = ср. арифм. знач эл с чётными числами
 {
-    int[] negative_number_array(int[] array)
-    {
+    int[] negative_number_array(int[] input_array) {
         int j = 0;
-        int[] negative_number_array = new int[array.Length];
+        int[] negative_number_array = new int[input_array.Length];
 
-        for (int i = 0; i < array.Length; i++)
-        {
-            if (array[i] % 2 == 1)
-            {
-                negative_number_array[j] = array[i];
+        for (int i = 0; i < input_array.Length; i++) {
+            if (input_array[i] % 2 == 1) {
+                negative_number_array[j] = input_array[i];
                 j += 1;
             }
         }
 
         int[] negative_array = new int[j];
         
-        for (int i = 0; i < j; i++)
-        {
+        for (int i = 0; i < j; i++) {
             negative_array[i] = negative_number_array[i];
         }
 
         return negative_array;
     }
 
-    int[] positive_number_array(int[] array)
+    int[] positive_number_array(int[] input_array)
     {
         int j = 0;
-        int[] positive_number_array = new int[array.Length];
+        int[] positive_number_array = new int[input_array.Length];
 
-        for (int i = 0; i < array.Length; i++)
-        {
-            if (array[i] % 2 == 0)
-            {
-                positive_number_array[j] = array[i];
+        for (int i = 0; i < input_array.Length; i++) {
+            if (input_array[i] % 2 == 0) {
+                positive_number_array[j] = input_array[i];
                 j += 1;
             }
         }
 
         int[] positive_array = new int[j];
         
-        for (int i = 0; i < j; i++)
-        {
+        for (int i = 0; i < j; i++) {
             positive_array[i] = positive_number_array[i];
         }
 
         return positive_array;
     }
 
-    double average_array(int[] array)
-    {
+    double average_array(int[] input_array) {
         int sum = 0;
-        for (int i = 0; i < array.Length; i++)
-        {
-            sum = sum + array[i];
+        for (int i = 0; i < input_array.Length; i++) {
+            sum = sum + input_array[i];
         }
-        return sum / array.Length;
+        return sum / input_array.Length;
     }
 
     Console.Clear();
     Console.WriteLine("Задача *. Сравнивает среднее арифметическое 2х массивов (четный и нечётный) созданные из 1 случайного массива.\n");
 
-    int[] array = new int[6];
-    array = array_random(array, 1, 10);
+    int[] array = fill_array_ONE_dimensional(6, 1, 10);
 
     Console.WriteLine($"Массив - [{String.Join(", ",array)}]");
-
-    /*Console.Write($"Массив чётных - [{String.Join(", ",positive_number_array(array))}]. ");
-    Console.Write($"Среднее арифметическое - {average_array(positive_number_array(array))}\n");
-    Console.Write($"Массив нечётных - [{String.Join(", ",negative_number_array(array))}]. ");
-    Console.Write($"Среднее арифметическое - {average_array(negative_number_array(array))}\n");*/
 
     if (average_array(positive_number_array(array)) > average_array(negative_number_array(array)))
     {
@@ -803,127 +743,269 @@ void Exemple_6() // Дополнительная задача 2 (задача с
 // [4,2,3,1] -> хаотично
 // [1,1,1,1] -> все элементы равны
 {
-    bool ascending(int[] array)
-    {
-        int number_array = array[0];
+    bool ascending(int[] input_array) {
+        int number_array = input_array[0];
 
-        for (int i = 1; i < array.Length; i++)
-        {
-            if (array[i] > number_array)
-            {
-                number_array = array[i];
-            }
-            else
-            {
-                return false;
-            }
+        for (int i = 1; i < input_array.Length; i++) {
+            if (input_array[i] > number_array) number_array = input_array[i];
+            else return false;
         }
 
         return true;
-
     }
 
-    bool descending(int[] array)
+    bool descending(int[] input_array)
     {
-        int number_array = array[0];
+        int number_array = input_array[0];
 
-        for (int i = 1; i < array.Length; i++)
-        {
-            if (array[i] < number_array)
-            {
-                number_array = array[i];
-            }
-            else
-            {
-                return false;
-            }
+        for (int i = 1; i < input_array.Length; i++) {
+            if (input_array[i] < number_array) number_array = input_array[i];
+            else return false;
         }
 
         return true;
-
     }
 
-    bool equal(int[] array)
+    bool equal(int[] input_array)
     {
-        int number_array = array[0];
+        int number_array = input_array[0];
 
-        for (int i = 0; i < array.Length; i++)
-        {
-            if (array[i] != number_array)
-            {
-                return false;
-            }
+        for (int i = 0; i < input_array.Length; i++) {
+            if (input_array[i] != number_array) return false;
         }
 
         return true;
-
     }
 
-    bool chaotic(int[] array)
-    {
-        if ((((ascending(array) == false)) & (descending(array) == false)) & (equal(array) == false))
-        {
-            return true;
-        }
+    bool chaotic(int[] input_array) {
+        if ((((ascending(input_array) == false)) & 
+            (descending(input_array) == false)) & 
+            (equal(input_array) == false)) return true;
 
         return false;
-
     }
 
     Console.Clear();
     Console.WriteLine("Задача **. Определяет в какой последовательности заданы элементы в массиве из N элементов.\n");
     Console.Write("Введите число N: ");
-    int number = int.Parse(Console.ReadLine());
+    int N = int.Parse(Console.ReadLine());
 
-    int[] array = new int[number];
-    array = array_random(array, 1, 5);
+    int[] array = fill_array_ONE_dimensional(N, 1, 5);
 
     Console.WriteLine($"Массив - [{String.Join(", ",array)}]");
 
-    if (chaotic(array) == false)
-    {
-        if (equal(array) == true)
-        {
-            Console.WriteLine($"Элементы в массиве одиннаковые\n");
-        }
-        else if (descending(array) == true)
-        {
-            Console.WriteLine($"Элементы в массиве расположены по убыванию\n");
-        }
-        else if (ascending(array) == true)
-        {
-            Console.WriteLine($"Элементы в массиве расположены по возрастанию\n");
-        }
+    if (chaotic(array) == false) {
+        if (equal(array) == true) Console.WriteLine($"Элементы в массиве одиннаковые\n");
+        else if (descending(array) == true) Console.WriteLine($"Элементы в массиве расположены по убыванию\n");
+        else if (ascending(array) == true) Console.WriteLine($"Элементы в массиве расположены по возрастанию\n");
     }
-    else
-    {
-        Console.WriteLine($"Элементы в массиве расположены хаотично\n");
-    }
+    else Console.WriteLine($"Элементы в массиве расположены хаотично\n");
 
     Break();   
 }
 
-int[] array_random(int[] array, int from = 0, int to = 100) // Заполнение массива случайными числами
+void Exemple41() // Задача 41: Пользователь вводит с клавиатуры M чисел. 
+// Посчитайте, сколько чисел больше 0 ввёл пользователь.
+// 0, 7, 8, -2, -2 -> 2
+// 1, -7, 567, 89, 223-> 3
 {
-    Random random = new Random();
-    for (int i = 0; i < array.Length; i++)
-    {
-        array[i] = random.Next(from, to);
+    Console.Clear();
+    Console.WriteLine("Задача 41. Показывает количество чисел больше 0 из M чисел.\n");
+    Console.Write("Укажите количество чисел M: ");
+    int M = int.Parse(Console.ReadLine());
+
+    int[] array_numbers = new int[M];
+    int count = 0;
+
+    for (int i = 0; i < M; i++) {
+        Console.Write("Введите {0}-ое число: ", i + 1);
+        array_numbers[i] = int.Parse(Console.ReadLine());
+        if (array_numbers[i] > 0) count += 1;
     }
 
-    return array;
+    Console.WriteLine($"\nКолличество чисел больше 0 = {count}\n");
+
+    Break();
+}
+
+void Exemple43() // Задача 43: Напишите программу, которая найдёт точку пересечения двух прямых, 
+// заданных уравнениями y = k1 * x + b1, y = k2 * x + b2; 
+// значения b1, k1, b2 и k2 задаются пользователем.
+// b1 = 2, k1 = 5, b2 = 4, k2 = 9 -> (-0,5; -0,5)
+// b2 = b1 and k2 = k1 and y = b1 + k1 x
+// k2<k1 and x = (b2 - b1)/(k1 - k2) and y = (b2 k1 - b1 k2)/(k1 - k2)
+// k2>k1 and x = (b2 - b1)/(k1 - k2) and y = (b2 k1 - b1 k2)/(k1 - k2)
+{
+    Console.Clear();
+    Console.WriteLine("Задача 43. Находит точку пересечения 2-х заданных прямых через уравнения y=k1*x+b1, y=k2*x+b2.\n");
+    Console.WriteLine("Для определения прямых. Введите 2-е точки для каждой из прямой.");
+    Console.Write("Введите угловой коэффициент для прямой A.\nk1 = ");
+    double k1 = double.Parse(Console.ReadLine());
+    Console.Write("Введите точку на оси ' y ' для прямой A.\nb1 = ");
+    double b1 = double.Parse(Console.ReadLine());
+    Console.Write("Введите угловой коэффициент для прямой B.\nk2 = ");
+    double k2 = double.Parse(Console.ReadLine());
+    Console.Write("Введите точку на оси ' y ' для прямой B.\nb2 = ");
+    double b2 = double.Parse(Console.ReadLine());
+
+    double x = 0;
+    double y = 0;
+
+    if (k1 == k2) Console.WriteLine("Прямые параллельные и не пересекаются");
+    else {
+        x = (b1 - b2) / (k2 - k1);
+        y = k1 * x + b1;
+        Console.WriteLine($"Точка пересечения = ({x}; {y})");
+    }
+
+    Break();
+}
+
+void Exemple_7() // Дополнительная задача (задача со звёздочкой): Напишите программу, 
+// которая задаёт массив из n элементов, которые необходимо заполнить случайными значениями 
+// и сдвинуть элементы массива влево, или вправо на 1 позицию.
+// [8, 5, 1, 7, 0] - [5, 1, 7, 0, 8] - сдвиг влево
+// [8, 5, 1, 7, 0] - [0, 8, 5, 1, 7] - сдвиг вправо
+{
+    int[] left_shift(int[] input_array) {
+        int first_number = input_array[0];
+
+        for (int i = 0; i < input_array.Length - 1; i++) {
+            input_array[i] = input_array[i + 1];
+        }
+
+        input_array[input_array.Length - 1] = first_number;
+        return input_array;
+    }
+
+    int[] right_shift(int[] input_array) {
+        int last_number = input_array[input_array.Length - 1];
+
+        for (int i = input_array.Length - 1; i > 0; i--) {
+            input_array[i] = input_array[i - 1];
+        }
+
+        input_array[0] = last_number;
+        return input_array;
+    }
+
+    void shift(int[] input_array) {
+        Console.Write("\nВ какую сторону сдвинуть массив?\nL (Влево) | R (Вправо)\t");
+        string side = Convert.ToString(Console.ReadLine()).ToLower();
+
+        if (side == "l") {
+            Console.Write("\nСдвинули массив на 1 позицию влево: ");
+            print_array_ONE_dimensional(left_shift(input_array)); 
+        }
+        else if (side == "r") {
+            Console.Write("\nСдвинули массив на 1 позицию вправо: ");
+            print_array_ONE_dimensional(right_shift(input_array)); 
+        }
+        else {
+            Console.WriteLine("\nВ эту сторону сдвинуть невозможно.");
+        }
+    }
+
+    Console.Clear();
+    Console.WriteLine("Задача *. Заполняет массив из N элементов случайными числами "
+        + "и сдвигает элемент на 1 позицию влево или вправо.\n");
+    Console.Write("Введите число N: ");
+    int N = int.Parse(Console.ReadLine());    
+
+    int[] array = new int[N];
+    array = fill_array_ONE_dimensional(N);
+    print_array_ONE_dimensional(array);
+
+    shift(array);
+
+    Break();
+}
+
+void Exemple_8() // Дополнительная задача 2 (задача со звёздочкой): Напишите программу, 
+// которая задаёт массив из n элементов, которые необходимо заполнить случайными значениями 
+// и определить существует ли пара соседних элементов с одинаковыми значениями, 
+// при наличии такого элемента заменить его на уникакальное значение.
+// [1,2,3,3] -> [1,2,3,4]
+{
+    void search_equal_number(int[] input_array) {
+        int new_number = 1;
+        int count = 0;
+
+        for (int i = 0; i < input_array.Length - 1; i++) {
+            if (input_array[i] == input_array[i + 1]) {
+                for (int j = 0; j < input_array.Length; j++) {
+                    if (new_number == input_array[j]) {
+                        new_number += 1;
+                        j = -1;
+                    }
+                }
+                Console.WriteLine($"Найдены соседние элементы на позициях {i + 1} и {i + 2}");
+                input_array[i + 1] = new_number;
+                Console.WriteLine($"Новое значение {i + 2}-ого элемента = {new_number}");
+                count += 1;
+            }
+        }
+
+        if (count > 0) print_array_ONE_dimensional(input_array);
+        else Console.WriteLine("Соседних одиннаковых значений не найдено.");
+    }
+
+    Console.Clear();
+    Console.WriteLine("Задача **. Проверяет соседние числа в массиве из N элементов.\n"
+        + "Если они совпадают, заменяет второе из них на уникальное значение.\n");
+    Console.Write("Введите число N: ");
+    int N = int.Parse(Console.ReadLine()); 
+
+    int[] array = new int[N];
+    array = fill_array_ONE_dimensional(N);
+    print_array_ONE_dimensional(array);
+
+    search_equal_number(array);
+
+    Break();
+}
+
+int[] fill_array_ONE_dimensional(int size, int min = 1, int max = 10) // Заполнение 1 мерного массива случайными числами 
+{
+    int[] filled_array = new int[size];
+    for (int i = 0; i < size; i++) {
+        filled_array[i] = new Random().Next(min, max);
+    }
+    return filled_array;
+}
+
+void print_array_ONE_dimensional(int[] input_array) // Вывод 1 мерного массива
+{
+    Console.Write($"\n[{String.Join(",", input_array)}]");
+    Console.WriteLine();
+}
+
+int[,] fill_array_TWO_dimensional(int rows, int columns, int min = 1, int max = 10) // Заполнение 2 мерного массива случайными числами 
+{
+    int[,] filled_array = new int[rows, columns];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            filled_array[i, j] = new Random().Next(min, max);
+        }
+    }
+    return filled_array;
+}
+
+void print_array_TWO_dimensional(int[,] input_array) // Вывод 2 мерного массива
+{
+    for (int i = 0; i < input_array.GetLength(0); i++) {
+        for (int j = 0; j < input_array.GetLength(1); j++) {
+            Console.Write(" " + input_array[i, j]);
+        }
+        Console.WriteLine();
+    }
 }
 
 void Break() // Завершение програграммы
 {
-    Console.WriteLine("\nДля выбора Другой задачи введите 5.     Для выхода из программы 0\n");
+    Console.WriteLine("\nДля выбора Другой задачи введите 5.     Для выхода из программы 0.\n");
     int ret = int.Parse(Console.ReadLine());
 
     if (ret == 5) Run();
-    else 
-    {
-        Console.Clear();
-        Console.WriteLine("Для завершения программы Enter");
-        Console.ReadLine();
-    }
+    else if (ret != 0) Break();
 }
