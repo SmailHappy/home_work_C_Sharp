@@ -3,12 +3,13 @@
 void Run() // Выбор задачи
 {
     Console.Clear();
-    Console.WriteLine("Д/з - 1. Задача 2 - 2. Задача 4 - 4. Задча 6 - 6. Задача 8 - 8."
-                    + "Д/з - 2. Задача 10 - 10. Задача 13 - 13. Задча 15 - 15."
-                    + "Д/з - 3. Задача 19 - 19. Задача 21 - 21. Задча 23 - 23. Задача * - 01. Задача ** - 02."
-                    + "Д/з - 4. Задача 25 - 25. Задача 27 - 27. Задча 29 - 29. Задача * - 03. Задача ** - 04."
-                    + "Д/з - 5. Задача 34 - 34. Задача 36 - 36. Задча 38 - 38. Задача * - 05. Задача ** - 06."
-                    + "Д/з - 6. Задача 41 - 41. Задача 43 - 43. Задача * - 07. Задача ** - 08.\n");
+    Console.WriteLine("Д/з - 1. Задача 2 - 2. Задача 4 - 4. Задча 6 - 6. Задача 8 - 8.\n"
+                    + "Д/з - 2. Задача 10 - 10. Задача 13 - 13. Задча 15 - 15.\n"
+                    + "Д/з - 3. Задача 19 - 19. Задача 21 - 21. Задча 23 - 23. Задача * - 01. Задача ** - 02.\n"
+                    + "Д/з - 4. Задача 25 - 25. Задача 27 - 27. Задча 29 - 29. Задача * - 03. Задача ** - 04.\n"
+                    + "Д/з - 5. Задача 34 - 34. Задача 36 - 36. Задча 38 - 38. Задача * - 05. Задача ** - 06.\n"
+                    + "Д/з - 6. Задача 41 - 41. Задача 43 - 43. Задача * - 07. Задача ** - 08.\n"
+                    + "Д/з - 7. Задача 47 - 47. Задача 50 - 50. Задача 52 - 52. Задача * - 09. Задача ** - 010.\n");
     Console.Write("Введите код задачи: ");
     int exempl = int.Parse(Console.ReadLine());
 
@@ -38,6 +39,11 @@ void Run() // Выбор задачи
     else if (exempl == 43) Exemple43();
     else if (exempl == 07) Exemple_7();
     else if (exempl == 08) Exemple_8();
+    else if (exempl == 47) Exemple47();
+    else if (exempl == 50) Exemple50();
+    else if (exempl == 52) Exemple52();
+    else if (exempl == 09) Exemple_9();
+    else if (exempl == 010) Exemple_10();
     else {
         Console.WriteLine("\nТакой задачи здесь нету");
         Break();
@@ -965,6 +971,207 @@ void Exemple_8() // Дополнительная задача 2 (задача с
     Break();
 }
 
+void Exemple47() // Задача 47. Задайте двумерный массив размером m×n, заполненный случайными вещественными числами.
+// m = 3, n = 4.
+// 0,5 7 -2 -0,2
+// 1 -3,3 8 -9,9
+// 8 7,8 -7,1 9
+{
+    Console.Clear();
+    Console.WriteLine("Задача 47. Заполняет массив размером M * N случайными вещественными числами.\n");
+    Console.Write("Введите число M: ");
+    int M = int.Parse(Console.ReadLine());
+    Console.Write("Введите число N: ");
+    int N = int.Parse(Console.ReadLine());
+
+    double[,] array = fill_array_TWO_dimensional(M, N, -10, 10, 0);
+
+    print_array_TWO_dimensional(array);
+
+    Break();
+}
+
+void Exemple50() // Задача 50. Напишите программу, которая на вход принимает позиции элемента в двумерном массиве, 
+// и возвращает значение этого элемента или же указание, что такого элемента нет.
+// Например, задан массив: 
+// 1 4 7 2
+// 5 9 2 3
+// 8 4 2 4
+// 17 -> такого числа в массиве нет
+{
+    Console.Clear();
+    Console.WriteLine("Задача 50. Показывает значение выбранной позиции в двумерном массиве.\n");
+
+    double[,] array = fill_array_TWO_dimensional(3, 4);
+    print_array_TWO_dimensional(array);
+
+    Console.Write("Для поиска значения\nВведите номер строки: ");
+    int row = int.Parse(Console.ReadLine());
+
+    if (row > 0 & row <= array.GetLength(0)) {
+        Console.Write("Введите номер столбца: ");
+        int col = int.Parse(Console.ReadLine());
+
+        if (col > 0 & col <= array.GetLength(1)) Console.WriteLine($"\nЧисло в выбранной позиции = {array[row - 1, col - 1]}");
+        else Console.WriteLine("\nТакой позиции в массиве нету");
+    }
+    else Console.WriteLine("\nТакой позиции в массиве нету");
+
+    Break();
+}
+
+void Exemple52() // Задача 52. Задайте двумерный массив из целых чисел. 
+// Найдите среднее арифметическое элементов в каждом столбце.
+// Например, задан массив:
+// 1 4 7 2
+// 5 9 2 3
+// 8 4 2 4
+// Среднее арифметическое каждого столбца: 4,6; 5,6; 3,6; 3.
+{
+    double[] average_collumn(double[,] input_array) {
+        double[] average_collumn = new double[input_array.GetLength(1)];
+
+        for (int j = 0; j < input_array.GetLength(1); j++) {
+            for (int i = 0; i < input_array.GetLength(0); i++) {
+                average_collumn[j] = average_collumn[j] + input_array[i, j];
+            }
+            average_collumn[j] = Math.Round(average_collumn[j] / input_array.GetLength(0), 1);
+        }
+
+        return average_collumn;
+    }
+
+    Console.Clear();
+    Console.WriteLine("Задача 52. Находит среднее арифметическое в каждом столбце.\n");
+
+    double[,] array = fill_array_TWO_dimensional(3, 4, 1);
+    print_array_TWO_dimensional(array);
+
+    double[] average_col = average_collumn(array);
+    
+    for (int i = 0; i < array.GetLength(1); i++) {
+        Console.WriteLine($"Среднее арифметическое {i + 1} столбца = {average_col[i]}");
+    }
+
+    Break();
+}
+
+void Exemple_9() // Дополнительная задача (задача со звёздочкой): Задайте двумерный массив из целых чисел. 
+// Определите, есть столбец в массиве, сумма которого, больше суммы элементов расположенных 
+// в четырех "углах" двумерного массива.
+// Например, задан массив:
+// 4 4 7 5
+// 4 3 5 3
+// 8 1 6 8 -> нет
+// 2 4 7 2
+// 4 3 5 3
+// 2 1 6 2 -> да
+{
+    void check_sum(double[,] input_array) {
+        double sum_angles = input_array[input_array.GetLength(0) - 1, input_array.GetLength(1) - 1] 
+                            + input_array[0, input_array.GetLength(1) - 1]
+                            + input_array[0, 0]
+                            + input_array[input_array.GetLength(0) - 1, 0];
+    
+        double sum_col = 0;
+        int count = 0;
+
+        for (int j = 0; j < input_array.GetLength(1); j++) {
+            for (int i = 0; i < input_array.GetLength(0); i++) {
+                sum_col = sum_col + input_array[i, j];
+            }
+            if (sum_col > sum_angles) {
+                Console.WriteLine($"Сумма столбца {j + 1} больше суммы углов в этом массиве.");
+                count = 1;
+            }
+            sum_col = 0;
+        }
+
+        if (count == 0) Console.WriteLine("В данном массиве нет таких столбцов.");
+    }
+
+    Console.Clear();
+    Console.WriteLine("Задача *. Определяет есть ли столбец, сумма элементов которого больше "
+        + "суммы элементов в углах двумерного массива.\n");
+
+    double[,] array = fill_array_TWO_dimensional(3, 4, 1);
+    print_array_TWO_dimensional(array);
+
+    check_sum(array);
+
+    Break();
+}
+
+void Exemple_10() // Дополнительная задача 2 (задача со звёздочкой): Вывести первые n строк треугольника Паскаля. 
+// Реализовать вывод в виде равнобедренного треугольника.
+// N = 7 -> https://ibb.co/yWPZbG7
+{
+    double[,] Paskal_treangle(double[,] input_array) {
+        int middle = input_array.GetLength(0) - 1;
+        input_array[0, middle] = 1;
+
+        if (input_array.GetLength(0) >= 1) {
+            input_array[1, middle - 1] = 1;
+            input_array[1, middle + 1] = 1;
+
+            for (int i = 2; i < input_array.GetLength(0); i++) {
+                input_array[i, middle - i] = 1;
+                input_array[i, middle + i] = 1;
+
+                if (i % 2 == 0) {
+                    input_array[i, middle] = input_array[i - 1, middle - 1] + input_array[i - 1, middle + 1];
+                    for (int j = 2; j < i; j += 2) {
+                        input_array[i, middle - j] = input_array[i - 1, middle - j + 1] + input_array[i - 1, middle - j - 1];
+                        input_array[i, middle + j] = input_array[i, middle - j];
+                    }
+                }
+                else {
+                    input_array[i, middle - 1] = input_array[i - 1, middle - 2] + input_array[i - 1, middle];
+                    input_array[i, middle + 1] = input_array[i, middle - 1];
+                    for (int j = 2; j < i - 1; j += 2) {
+                        input_array[i, middle - j - 1] = input_array[i - 1, middle - j - 2] + input_array[i - 1, middle - j];
+                        input_array[i, middle + j + 1] = input_array[i, middle - j - 1];
+                    }
+                }
+            }
+        }
+
+
+
+        return input_array;
+    }
+
+    string replace(double[,] input_array) {
+        string result = String.Empty;
+        string value = String.Empty;
+
+        for (int i = 0; i < input_array.GetLength(0); i++) {
+            for (int j = 0; j < input_array.GetLength(1); j++) {
+                value = Convert.ToString(input_array[i, j]);
+                if (value == "0") value = " ";
+                result = result + value;
+            }
+            result = result + "\n";
+        }
+
+        return result;
+    }
+
+    Console.Clear();
+    Console.WriteLine("Задача **. Выводит N строк треугольника Паскаля.\n");
+    Console.Write("Введите число N: ");
+    int N = int.Parse(Console.ReadLine());
+    int K = N * 2 - 1;
+
+    double[,] array = fill_array_TWO_dimensional(N, K, 0, 1);
+
+    Paskal_treangle(array);
+    
+    Console.WriteLine(replace(array));
+
+    Break();
+}
+
 int[] fill_array_ONE_dimensional(int size, int min = 1, int max = 10) // Заполнение 1 мерного массива случайными числами 
 {
     int[] filled_array = new int[size];
@@ -980,18 +1187,20 @@ void print_array_ONE_dimensional(int[] input_array) // Вывод 1 мерног
     Console.WriteLine();
 }
 
-int[,] fill_array_TWO_dimensional(int rows, int columns, int min = 1, int max = 10) // Заполнение 2 мерного массива случайными числами 
+double[,] fill_array_TWO_dimensional(int rows, int columns, int min = -10, int max = 10, double mode = 1) // Заполнение 2 мерного массива случайными числами 
 {
-    int[,] filled_array = new int[rows, columns];
+    double[,] filled_array = new double[rows, columns];
+
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-            filled_array[i, j] = new Random().Next(min, max);
+            if (mode == 0) filled_array[i, j] = Math.Round(new Random().NextDouble() * new Random().Next(min, max), 1);
+            else filled_array[i, j] = new Random().Next(min, max);
         }
     }
     return filled_array;
 }
 
-void print_array_TWO_dimensional(int[,] input_array) // Вывод 2 мерного массива
+void print_array_TWO_dimensional(double[,] input_array) // Вывод 2 мерного массива
 {
     for (int i = 0; i < input_array.GetLength(0); i++) {
         for (int j = 0; j < input_array.GetLength(1); j++) {
