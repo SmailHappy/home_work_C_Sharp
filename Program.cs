@@ -9,7 +9,8 @@ void Run() // Выбор задачи
                     + "Д/з - 4. Задача 25 - 25. Задача 27 - 27. Задча 29 - 29. Задача * - 03. Задача ** - 04.\n"
                     + "Д/з - 5. Задача 34 - 34. Задача 36 - 36. Задча 38 - 38. Задача * - 05. Задача ** - 06.\n"
                     + "Д/з - 6. Задача 41 - 41. Задача 43 - 43. Задача * - 07. Задача ** - 08.\n"
-                    + "Д/з - 7. Задача 47 - 47. Задача 50 - 50. Задача 52 - 52. Задача * - 09. Задача ** - 010.\n");
+                    + "Д/з - 7. Задача 47 - 47. Задача 50 - 50. Задача 52 - 52. Задача * - 09. Задача ** - 010.\n"
+                    + "Д/з - 8. Задача 54 - 54. Задача 56 - 56. Задача 58 - 58. Задача * - 011. Задача ** - 012.\n");
     Console.Write("Введите код задачи: ");
     int exempl = int.Parse(Console.ReadLine());
 
@@ -44,6 +45,11 @@ void Run() // Выбор задачи
     else if (exempl == 52) Exemple52();
     else if (exempl == 09) Exemple_9();
     else if (exempl == 010) Exemple_10();
+    else if (exempl == 54) Exemple54();
+    else if (exempl == 56) Exemple56();
+    else if (exempl == 58) Exemple58();
+    else if (exempl == 011) Exemple_11();
+    else if (exempl == 012) Exemple_12();
     else {
         Console.WriteLine("\nТакой задачи здесь нету");
         Break();
@@ -1168,6 +1174,329 @@ void Exemple_10() // Дополнительная задача 2 (задача �
     Paskal_treangle(array);
     
     Console.WriteLine(replace(array));
+
+    Break();
+}
+
+void Exemple54() // Задача 54: Задайте двумерный массив. Напишите программу, 
+// которая упорядочит по убыванию элементы каждой строки двумерного массива.
+// Например, задан массив:
+// 1 4 7 2
+// 5 9 2 3
+// 8 4 2 4
+// В итоге получается вот такой массив:
+// 7 4 2 1
+// 9 5 3 2
+// 8 4 4 2
+{
+    double[,] sort_of_descending(double[,] input_array) {
+        double max = 0;
+        double max_second = 0;
+
+        for (int i = 0; i < input_array.GetLength(0); i++) {
+            for (int k = 0; k < input_array.GetLength(1); k++) {
+                max = input_array[i, k];
+                for (int j = 0; j < input_array.GetLength(1); j++) {
+                    if (input_array[i, j] < max) {
+                        max_second = max;
+                        max = input_array[i, j];
+                        input_array[i, j] = max_second;
+                        input_array[i, k] = max;
+                    }
+                }
+            }
+        }
+
+        return input_array;
+    }
+
+    Console.Clear();
+    Console.WriteLine("Задача 54. Упорядочивает каждую строчку двумерного массива (M x N) в порядке убывания.\n");
+    Console.Write("Введите число M: ");
+        int M = int.Parse(Console.ReadLine()); 
+    Console.Write("Введите число N: ");
+        int N = int.Parse(Console.ReadLine());
+    Console.WriteLine();
+
+    double[,] array = fill_array_TWO_dimensional(M, N, 1);
+    print_array_TWO_dimensional(array);
+
+    sort_of_descending(array);
+
+    print_array_TWO_dimensional(array);
+
+    Break();
+}
+
+void Exemple56() // Задача 56: Задайте прямоугольный двумерный массив. 
+// Напишите программу, которая будет находить строку с наименьшей суммой элементов.
+// Например, задан массив:
+// 1 4 7 2
+// 5 9 2 3
+// 8 4 2 4
+// 5 2 6 7
+// Программа считает сумму элементов в каждой строке и выдаёт номер строки с наименьшей суммой элементов: 1 строка
+{
+    void min_sum_row(double[,] input_array) {
+        double sum(double[,] input_array, int index) {
+            double sum = 0;
+            for (int j = 0; j < input_array.GetLength(1); j++) {
+                sum += input_array[index, j];
+            }
+            return sum;
+        }
+        
+        int index = 0;
+        double sum_row = sum(input_array, index);
+
+        for (int i = 0; i < input_array.GetLength(0); i++) {
+            if (sum(input_array, i) < sum_row) {
+                sum_row = sum(input_array, i);
+                index = i;
+            }
+        }
+
+        Console.WriteLine($"Строка с наименьшей суммой элементов - {index + 1}.");
+    }
+
+    Console.Clear();
+    Console.WriteLine("Задача 56. Находит строку с наименьшей суммой элементов в массиве (M x N).\n");
+    Console.Write("Введите число M: ");
+        int M = int.Parse(Console.ReadLine()); 
+    Console.Write("Введите число N: ");
+        int N = int.Parse(Console.ReadLine());
+    Console.WriteLine();
+
+    double[,] array = fill_array_TWO_dimensional(M, N, 1);
+    print_array_TWO_dimensional(array);
+
+    min_sum_row(array);
+    
+    Break();
+}
+
+void Exemple58() // Задача 58: Задайте две матрицы. Напишите программу, 
+// которая будет находить произведение двух матриц.
+// Например, даны 2 матрицы:
+// 2 4 | 3 4
+// 3 2 | 3 3
+// Результирующая матрица будет:
+// 18 20
+// 15 18
+{
+    double[,] multiplay_array(double[,] input_array_one, double[,] input_array_two) {
+        double multiplay = 0;
+        double[,] multi_array = new double[input_array_one.GetLength(0), input_array_two.GetLength(1)];
+
+        for (int i = 0; i < input_array_one.GetLength(0); i++) {
+            for (int k = 0; k < input_array_two.GetLength(1); k++) {
+                for (int j = 0; j < input_array_one.GetLength(1); j++) {
+                    multiplay = input_array_one[i, j] * input_array_two[j, k] + multiplay;
+                }
+                multi_array[i, k] = multiplay;
+                multiplay = 0;
+            }
+        }
+
+        return multi_array;
+    }
+
+    Console.Clear();
+    Console.WriteLine("Задача 58. Находит произведение 2х матриц A (M x N) и B (N x K).\n");
+    Console.Write("Введите число M для матрицы A: ");
+        int M_one_array = int.Parse(Console.ReadLine()); 
+    Console.Write("Введите число N: ");
+        int N_array = int.Parse(Console.ReadLine());
+    Console.Write("Введите число L для матрицы B: ");
+        int L_two_array = int.Parse(Console.ReadLine());
+    Console.WriteLine();
+
+    Console.WriteLine("Матрица A.\n");
+    double[,] array_one = fill_array_TWO_dimensional(M_one_array, N_array, 1);
+    print_array_TWO_dimensional(array_one);
+
+    Console.WriteLine("Матрица B.\n");
+    double[,] array_two = fill_array_TWO_dimensional(N_array, L_two_array, 1);
+    print_array_TWO_dimensional(array_two);
+
+    Console.WriteLine("Произведение матриц.\n");
+    double[,] array = multiplay_array(array_one, array_two);
+    print_array_TWO_dimensional(array);
+    
+    Break();
+}
+
+void Exemple_11() // Дополнительная задача (задача со звёздочкой): 
+// Сформируйте трёхмерный массив из неповторяющихся двузначных чисел. 
+// Напишите программу, которая будет построчно выводить массив, добавляя индексы каждого элемента.
+// // Массив размером 2 x 2 x 2
+// 66(0,0,0) 25(0,1,0)
+// 34(1,0,0) 41(1,1,0)
+// 27(0,0,1) 90(0,1,1)
+// 26(1,0,1) 55(1,1,1)
+{
+    int[,,] fill_array_THREE_dimensional(int rows, int columns, int plane, int min = 10, int max = 100) {
+        int[,,] array = new int[rows, columns, plane];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                for (int k = 0; k < plane; k++) {
+                    array[i, j, k] = new Random().Next(min, max);
+                }
+            }
+        }
+
+        return array;
+    }
+
+    void search_equal_number(int[,,] input_array) {
+        int new_number = 10;
+        int count_equal_number = 0;
+
+        for (int i = 0; i < input_array.GetLength(0); i++) {
+            for (int j = 0; j < input_array.GetLength(1); j++) {
+                for (int k = 0; k < input_array.GetLength(2); k++) {
+                    if (count_number(input_array, input_array[i, j, k]) > 1) {
+                        count_equal_number += 1;
+                        while (count_number(input_array, new_number) > 0) {
+                            new_number += 1;
+                        }
+                        input_array[i, j, k] = new_number;
+                    }
+                }
+            }
+        }
+        
+        if (count_equal_number > 0) {
+            Console.WriteLine("В массиве были повторяющиеся цифры, вот новый массив.\n");
+            print_array_THREE_dimensional(input_array);
+        }
+        else Console.WriteLine("В массиве нет повторяющихся читсел.");
+    }
+
+    int count_number(int[,,] input_array, int number) {
+        int count = 0;
+
+        for (int i = 0; i < input_array.GetLength(0); i++) {
+            for (int j = 0; j < input_array.GetLength(1); j++) {
+                for (int k = 0; k < input_array.GetLength(2); k++) {
+                    if (number == input_array[i, j, k]) count += 1;
+                }
+            }
+        }
+        return count;
+    }
+
+    void print_array_THREE_dimensional(int[,,] input_array) {
+        for (int i = 0; i < input_array.GetLength(0); i++) {
+            for (int j = 0; j < input_array.GetLength(1); j++) {
+                for (int k = 0; k < input_array.GetLength(2); k++) {
+                    Console.Write($" {input_array[i, j, k]} ({i}, {j}, {k})  ");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+    }
+
+    Console.Clear();
+    Console.WriteLine("Задача *. Формирует 3х мерный массив (M x N x K) с неповторяющими числами и выводит его на экран с индексами.\n");
+    Console.Write("Введите число M: ");
+    int M = int.Parse(Console.ReadLine()); 
+    Console.Write("Введите число N: ");
+    int N = int.Parse(Console.ReadLine());
+    Console.Write("Введите число K: ");
+    int K = int.Parse(Console.ReadLine());
+    Console.WriteLine();
+
+    Console.WriteLine("Изначальный массив\n");
+    int[,,] array = fill_array_THREE_dimensional(M, N, K);
+    print_array_THREE_dimensional(array);
+
+    search_equal_number(array);
+
+    Break();
+}
+
+void Exemple_12() // Дополнительная задача 2 (задача со звёздочкой):. 
+// Напишите программу, которая заполнит спирально массив 4 на 4.
+// Например, на выходе получается вот такой массив:
+// 01 02 03 04
+// 12 13 14 05
+// 11 16 15 06
+// 10 09 08 07
+{
+    int[,] fill_array_spiral(int rows, int columns) 
+    {
+        int[,] filled_array = new int[rows, columns];
+        int row = 0;
+        int col = 0;
+        int number = 10;
+        int n = 0;
+        int count_row_i = 0;
+        int count_col_j = 0;
+
+        for (int k = 1; k < rows + columns; k++) {
+            if (k % 2 == 1) {
+                if (count_row_i == 0) {
+                    row = n;
+                    for (int j = 0 + n; j < columns - n; j++) {
+                        filled_array[row, j] = number;
+                        number += 1;
+                    }
+                    n += 1;
+                    count_row_i = 1;
+                }
+                else {
+                    row = rows - n;
+                    for (int j = columns - 1 - n; j >= n - 1; j--) {
+                        filled_array[row, j] = number;
+                        number += 1;
+                    }
+                    count_row_i = 0;
+                }
+            }
+            else {
+                if (count_col_j == 0) {
+                    col = columns - n;
+                    for (int i = n; i < rows - n + 1; i++) {
+                        filled_array[i, col] = number;
+                        number += 1;
+                    }
+                    count_col_j = 1;
+                }
+                else {
+                    col = n - 1;
+                    for (int i = rows - 1 - n; i > n - 1; i--) {
+                        filled_array[i, col] = number;
+                        number += 1;
+                    }
+                    count_col_j = 0;
+                }
+            }
+        }
+
+        return filled_array;
+    }
+
+    void print_array_spiral(int[,] input_array) {
+        for (int i = 0; i < input_array.GetLength(0); i++) {
+            for (int j = 0; j < input_array.GetLength(1); j++) Console.Write(" " + input_array[i, j] + " ");
+            Console.WriteLine();
+        }
+        Console.WriteLine();
+    }
+
+    Console.Clear();
+    Console.WriteLine("Задача **. Заполнение 2х мерного массива (M * N) спирально.\n");
+    Console.Write("Введите число M: ");
+    int M = int.Parse(Console.ReadLine()); 
+    Console.Write("Введите число N: ");
+    int N = int.Parse(Console.ReadLine());
+    Console.WriteLine(); 
+
+    int[,] array = fill_array_spiral(M, N);
+    print_array_spiral(array);
 
     Break();
 }
