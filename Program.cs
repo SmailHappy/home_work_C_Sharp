@@ -10,7 +10,8 @@ void Run() // Выбор задачи
                     + "Д/з - 5. Задача 34 - 34. Задача 36 - 36. Задача 38 - 38. Задача * - 05. Задача ** - 06.\n"
                     + "Д/з - 6. Задача 41 - 41. Задача 43 - 43. Задача * - 07. Задача ** - 08.\n"
                     + "Д/з - 7. Задача 47 - 47. Задача 50 - 50. Задача 52 - 52. Задача * - 09. Задача ** - 010.\n"
-                    + "Д/з - 8. Задача 54 - 54. Задача 56 - 56. Задача 58 - 58. Задача * - 011. Задача ** - 012.\n");
+                    + "Д/з - 8. Задача 54 - 54. Задача 56 - 56. Задача 58 - 58. Задача * - 011. Задача ** - 012.\n"
+                    + "Д/з - 9. Задача 64 - 64. Задача 66 - 66. Задача 68 - 68. Задача * - 013. Задача ** - 014.\n");
     Console.Write("Введите код задачи: ");
     int exempl = int.Parse(Console.ReadLine());
 
@@ -50,6 +51,11 @@ void Run() // Выбор задачи
     else if (exempl == 58) Exemple58();
     else if (exempl == 011) Exemple_11();
     else if (exempl == 012) Exemple_12();
+    else if (exempl == 64) Exemple64();
+    else if (exempl == 66) Exemple66();
+    else if (exempl == 68) Exemple68();
+    else if (exempl == 013) Exemple_13();
+    else if (exempl == 014) Exemple_14();
     else {
         Console.WriteLine("\nТакой задачи здесь нету");
         Break();
@@ -1497,6 +1503,157 @@ void Exemple_12() // Дополнительная задача 2 (задача �
 
     int[,] array = fill_array_spiral(M, N);
     print_array_spiral(array);
+
+    Break();
+}
+
+void Exemple64() // Задача 64: Задайте значения N и M. Напишите программу, которая выведет все чётные 
+// натуральные числа в промежутке от M до N с помощью рекурсии.
+// M = 1; N = 5 -> 2, 4
+// M = 4; N = 8 -> 4, 6, 8
+{
+    void output_number(int input_number, int end_num) {
+        if (input_number != end_num + 1) {
+            if (input_number % 2 == 0) Console.Write(input_number + " ");
+            output_number(input_number + 1, end_num);
+        }
+    }
+
+    Console.Clear();
+    Console.WriteLine("Задача 64. Выведит все чётные натуральные числа в промежутке от M до N.\n");
+    Console.Write("Введите число M: ");
+        int M = int.Parse(Console.ReadLine());
+    Console.Write("Введите число N: ");
+        int N = int.Parse(Console.ReadLine());
+    Console.WriteLine();
+
+    if (M > N) output_number(N, M);
+    else output_number(M, N);
+
+    Break();
+}
+
+void Exemple66() // Задача 66: Задайте значения M и N. 
+// Напишите программу, которая найдёт сумму натуральных элементов в промежутке от M до N.
+// M = 1; N = 15 -> 120
+// M = 4; N = 8. -> 30
+{
+    int sum_between_M_and_N(int from, int to, int sum = 0) {
+        if (from == to + 1) return sum;
+        else {
+            sum = sum + from;
+            return sum_between_M_and_N(from + 1, to, sum);
+        };
+    }
+
+    Console.Clear();
+    Console.WriteLine("Задача 66. Находит сумму в промежутке от M до N.\n");
+    Console.Write("Введите число M: ");
+        int M = int.Parse(Console.ReadLine()); 
+    Console.Write("Введите число N: ");
+        int N = int.Parse(Console.ReadLine());
+    Console.WriteLine();
+
+    if (M > N) Console.WriteLine($"Сумма между {N} и {M} = {sum_between_M_and_N(N, M)}");
+    else Console.WriteLine($"Сумма между {M} и {N} = {sum_between_M_and_N(M, N)}");
+
+    Break();
+}
+
+void Exemple68() // Задача 68: Задайте значения M и N. Напишите программу, которая найдёт 
+// наибольший общий делитель (НОД) этих чисел с помощью рекурсии.
+// M = 28; N = 7 -> 7
+{
+    int Nod(int input_number_one, int input_number_two, int n = 1, int nod = 1) {
+        if (input_number_one % n == 0 && input_number_two % n == 0) {
+            if (n > nod) nod = n;
+        }
+
+        if (input_number_two == n) return nod;
+        else return Nod(input_number_one, input_number_two, n + 1, nod);
+    }
+
+    Console.Clear();
+    Console.WriteLine("Задача 68. Находит наибольший общий делитель чисел M и N.\n");
+    Console.Write("Введите число M: ");
+        int M = int.Parse(Console.ReadLine()); 
+    Console.Write("Введите число N: ");
+        int N = int.Parse(Console.ReadLine());
+    Console.WriteLine();
+
+    if (M > N) Console.WriteLine($"Наибольший общий делитель = {Nod(M, N)}");
+    else Console.WriteLine($"Наибольший общий делитель = {Nod(N, M)}");
+    
+    Break();
+}
+
+void Exemple_13() // Дополнительная задача (задача со звёздочкой): 
+// Напишите программу вычисления функции Аккермана с помощью рекурсии.
+// Даны два неотрицательных числа m и n.
+// m = 2, n = 3 -> A(m,n) = 9
+// m = 3, n = 2 -> A(m,n) = 29
+{
+    int Akkerman(int input_number_one, int input_number_two) {
+        if (input_number_one == 0) return input_number_two + 1;
+        else if (input_number_one > 0 & input_number_two == 0) return Akkerman(input_number_one - 1, 1);
+        else if (input_number_one > 0 & input_number_two > 0) return Akkerman(input_number_one - 1, Akkerman(input_number_one, input_number_two - 1));
+        else return 0;  
+    }
+
+    Console.Clear();
+    Console.WriteLine("Задача *. Вычисляет функцию Аккермана.\n");
+    Console.Write("Введите число M: ");
+    int M = int.Parse(Console.ReadLine()); 
+    Console.Write("Введите число N: ");
+    int N = int.Parse(Console.ReadLine());
+    Console.WriteLine();
+
+    Console.WriteLine($"A({M}, {N}) = {Akkerman(M, N)}");
+
+    Break();
+}
+
+void Exemple_14() // Дополнительная задача 2 (задача со звёздочкой): Напишите программу, 
+// которая выводит монотонную последовательность из N элементов 
+// в виде равностороннего треугольника с помощью рекурсии
+// N = 5 -> https://ibb.co/9nZgLtY
+{
+    string treangle_number(int input_number) {
+        int middle = input_number - 1;
+        int n = 1;
+        string result = multiplication_whitespace(middle) + Convert.ToString(n) + multiplication_whitespace(middle) + "\n";
+
+        for (int k = 1; k < input_number; k++) {
+            n += 1;
+            int l = n;
+            result = result + multiplication_whitespace(middle - k);
+
+            while (l > 0) {
+                result = result + Convert.ToString(n) + " ";
+                l -= 1;
+            }
+
+            result = result + multiplication_whitespace(middle - k - 1) + "\n";
+        }
+
+        return result;
+    }
+
+    string multiplication_whitespace(int input_number) {
+        string result = String.Empty;
+        for (int i = 0; i < input_number; i++) {
+            result = result + " ";
+        }
+        return result;
+    }
+
+    Console.Clear();
+    Console.WriteLine("Задача **. Выводит последовательность из N элементов в виде треугольника.\n");
+    Console.Write("Введите число N: ");
+        int N = int.Parse(Console.ReadLine());
+    Console.WriteLine(); 
+
+    Console.WriteLine(treangle_number(N));
 
     Break();
 }
